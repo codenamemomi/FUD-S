@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800;900&display=swap');
+
+:root {
+  --primary: #064E3B; /* Chowdeck Forest Green */
+  --primary-light: #059669;
+  --bg: #FFFDF2; /* Chowdeck Cream */
+  --white: #ffffff;
+  --text: #0F172A;
+  --text-muted: #64748b;
+  
+  /* Chowdeck Pastel Palette */
+  --pastel-lilac: #D1D1F7;
+  --pastel-saffron: #FFEFB6;
+  --pastel-sky: #BCE3FF;
+  --pastel-mint: #C6F6D5;
+  --pastel-pink: #FFD1E1;
+  
+  --transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  --radius-lg: 2.5rem;
+  --radius-md: 1.5rem;
+  --shadow: 0 10px 30px -10px rgba(0,0,0,0.1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, .font-heading {
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Chowdeck Style Buttons */
+.btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 15px rgba(6, 78, 59, 0.2);
+}
+
+.btn-white {
+  background-color: var(--white);
+  color: var(--primary);
+}
+
+.btn-white:hover {
+  transform: scale(1.05);
+  box-shadow: var(--shadow);
+}
+
+/* Address/Signup Bar Style */
+.input-pill-group {
+  display: flex;
+  background: var(--white);
+  padding: 0.5rem;
+  border-radius: 9999px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  max-width: 500px;
+  width: 100%;
+}
+
+.input-pill-group input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 0 1.5rem;
+  font-size: 1rem;
+  outline: none;
+  font-family: inherit;
+}
+
+/* Layout Utilities */
+.section-padding {
+  padding: 5rem 0;
+}
+
+.text-center { text-align: center; }
+
+/* Animations */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeInUp 0.8s ease forwards;
+}
