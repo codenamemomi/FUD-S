@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { Utensils, ShoppingBag, Salad, Sparkles, ChefHat } from 'lucide-react';
+import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { Utensils, ShoppingBag, Salad, Sparkles, ChefHat, ArrowRight } from 'lucide-react';
 import burger from '../assets/burger.png';
 import groceries from '../assets/groceries.png';
 import spaghetti from '../assets/spaghetti.png';
@@ -11,7 +11,7 @@ const Features = () => {
     target: targetRef,
   });
 
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-60%"]);
+  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-65%"]);
 
   const strips = [
     {
@@ -52,7 +52,7 @@ const Features = () => {
   ];
 
   return (
-    <section ref={targetRef} className="features-sticky" style={{ height: '300vh', position: 'relative' }}>
+    <section ref={targetRef} id="products" className="features-sticky" style={{ height: '400vh', position: 'relative' }}>
       <div style={{
         position: 'sticky',
         top: 0,
@@ -62,86 +62,128 @@ const Features = () => {
         overflow: 'hidden',
         background: 'var(--white)'
       }}>
-        <div className="container">
-          <div style={{ marginBottom: '4rem' }}>
-            <h2 className="font-heading" style={{ fontSize: '4.5rem', fontWeight: 900, lineHeight: 1 }}>What's on Deck?</h2>
-            <p style={{ color: 'var(--text-muted)', fontSize: '1.2rem', fontWeight: 500 }}>Try the everything app for your stomach.</p>
+        <div className="container" style={{ width: '100%' }}>
+          <div style={{ marginBottom: '5rem', maxWidth: '800px' }}>
+            <motion.h2 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="font-heading" 
+              style={{ fontSize: 'clamp(3rem, 6vw, 6rem)', fontWeight: 900, lineHeight: 0.9, marginBottom: '1.5rem' }}
+            >
+              What's on <span className="text-primary">Deck?</span>
+            </motion.h2>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              style={{ color: 'var(--text-muted)', fontSize: 'clamp(1rem, 1.5vw, 1.4rem)', fontWeight: 600 }}
+            >
+              Try the everything app for your stomach. We handle the heavy lifting.
+            </motion.p>
           </div>
           
-          <motion.div className="strips-horizontal" style={{ x, display: 'flex', gap: '1.5rem' }}>
+          <motion.div className="strips-horizontal" style={{ x, display: 'flex', gap: '2rem' }}>
             {strips.map((strip, idx) => (
-              <div key={idx} className="strip-card" style={{
-                flex: '0 0 auto',
-                width: '450px',
-                height: '550px',
-                backgroundColor: strip.color,
-                borderRadius: '3rem',
-                padding: '3rem',
-                position: 'relative',
-                overflow: 'hidden',
-                border: '1.5px solid rgba(0,0,0,0.05)',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between'
-              }}>
-                <div>
-                  <div style={{ 
-                    background: 'white',
-                    width: '70px',
-                    height: '70px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    borderRadius: '1.5rem',
-                    boxShadow: '0 10px 20px rgba(0,0,0,0.05)',
-                    marginBottom: '2rem',
-                    color: 'var(--primary)'
-                  }}>
-                    <strip.Icon size={32} strokeWidth={2.5} />
-                  </div>
-                  <h3 className="font-heading" style={{ fontSize: '3rem', fontWeight: 900, marginBottom: '1.5rem', lineHeight: 1 }}>
-                    {strip.title}
-                  </h3>
-                  <p style={{ fontSize: '1.1rem', fontWeight: 600, lineHeight: 1.5, opacity: 0.8, maxWidth: '280px' }}>
-                    {strip.desc}
-                  </p>
-                </div>
-                
-                {strip.img && (
-                  <div className="strip-img" style={{ 
-                    position: 'absolute', 
-                    bottom: '-40px', 
-                    right: '-40px',
-                    width: '300px',
-                    transform: 'rotate(-8deg)',
-                    transition: 'var(--transition)'
-                  }}>
-                    <img src={strip.img} alt={strip.title} style={{ 
-                      width: '100%', 
-                      borderRadius: '2.5rem', 
-                      boxShadow: '0 20px 40px rgba(0,0,0,0.15)' 
-                    }} />
-                  </div>
-                )}
-              </div>
+              <FeatureCard key={idx} strip={strip} />
             ))}
           </motion.div>
         </div>
       </div>
       
       <style>{`
-        .strip-card:hover .strip-img {
-          transform: rotate(0) scale(1.05) translateY(-20px) !important;
-        }
-        @media (max-width: 768px) {
+        @media (max-width: 991px) {
           .features-sticky { height: auto !important; }
-          .features-sticky > div { position: relative !important; height: auto !important; padding: 4rem 0 !important; }
-          .features-sticky .strips-horizontal { x: 0 !important; flex-direction: column !important; }
-          .strip-card { width: 100% !important; height: auto !important; min-height: 400px !important; }
+          .features-sticky > div { position: relative !important; height: auto !important; padding: 6rem 0 !important; }
+          .strips-horizontal { 
+            transform: none !important; 
+            flex-direction: column !important; 
+            gap: 2rem !important;
+          }
         }
       `}</style>
     </section>
   );
 };
 
+const FeatureCard = ({ strip }) => {
+  const cardRef = useRef(null);
+  const isInView = useInView(cardRef, { once: true, margin: "-100px" });
+
+  return (
+    <motion.div 
+      ref={cardRef}
+      initial={{ opacity: 0, x: 50 }}
+      animate={isInView ? { opacity: 1, x: 0 } : {}}
+      transition={{ type: 'spring', stiffness: 50, damping: 20 }}
+      whileHover={{ y: -10 }}
+      className="strip-card" 
+      style={{
+        flex: '0 0 auto',
+        width: 'clamp(320px, 35vw, 500px)',
+        height: 'clamp(450px, 45vw, 620px)',
+        backgroundColor: strip.color,
+        borderRadius: '3.5rem',
+        padding: '3.5rem',
+        position: 'relative',
+        overflow: 'hidden',
+        border: '2px solid rgba(0,0,0,0.03)',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between'
+      }}
+    >
+      <div>
+        <div style={{ 
+          background: 'white',
+          width: '80px',
+          height: '80px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          borderRadius: '1.75rem',
+          boxShadow: '0 15px 30px rgba(0,0,0,0.05)',
+          marginBottom: '2.5rem',
+          color: 'var(--primary)'
+        }}>
+          <strip.Icon size={36} strokeWidth={2.5} />
+        </div>
+        <h3 className="font-heading" style={{ fontSize: 'clamp(2.5rem, 3.5vw, 3.8rem)', fontWeight: 900, marginBottom: '1.5rem', lineHeight: 0.9 }}>
+          {strip.title}
+        </h3>
+        <p style={{ fontSize: '1.2rem', fontWeight: 600, lineHeight: 1.4, opacity: 0.85, maxWidth: '280px' }}>
+          {strip.desc}
+        </p>
+      </div>
+      
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 800, color: 'var(--primary)', cursor: 'pointer' }}>
+        Learn more <ArrowRight size={20} strokeWidth={3} />
+      </div>
+      
+      {strip.img && (
+        <motion.div 
+          whileHover={{ scale: 1.1, rotate: 0 }}
+          className="strip-img" 
+          style={{ 
+            position: 'absolute', 
+            bottom: '-50px', 
+            right: '-50px',
+            width: 'clamp(200px, 20vw, 320px)',
+            transform: 'rotate(-12deg)',
+            transition: 'var(--transition)'
+          }}
+        >
+          <img src={strip.img} alt={strip.title} style={{ 
+            width: '100%', 
+            borderRadius: '3rem', 
+            boxShadow: '0 30px 60px rgba(0,0,0,0.18)' 
+          }} />
+        </motion.div>
+      )}
+    </motion.div>
+  );
+};
+
 export default Features;
+

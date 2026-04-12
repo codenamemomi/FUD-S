@@ -1,14 +1,31 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ShoppingBag, Menu, X, ChevronDown } from 'lucide-react';
+import logo from '../assets/Icon.svg';
 
 const Header = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const navItems = ['Company', 'Vendors', 'Riders', 'Products'];
+
   return (
-    <header className="header" style={{
-      position: 'absolute',
+    <header className={`header ${isScrolled ? 'is-sticky' : ''}`} style={{
+      position: 'fixed',
       top: 0,
       left: 0,
       right: 0,
-      padding: '1.5rem 0',
-      zIndex: 1000
+      padding: isScrolled ? '1rem 0' : '1.5rem 0',
+      zIndex: 1000,
+      transition: 'var(--transition)'
     }}>
       <div className="container" style={{
         display: 'flex',
@@ -16,57 +33,149 @@ const Header = () => {
         alignItems: 'center'
       }}>
         {/* Brand Logo */}
-        <div className="btn btn-primary" style={{
-          fontSize: '1.2rem',
-          fontWeight: 800,
-          background: 'var(--primary)',
-          color: 'white',
-          padding: '0.8rem 1.5rem',
-          borderRadius: '1.2rem'
-        }}>
-          FUDS<span style={{ color: 'var(--pastel-saffron)' }}>.</span>
-        </div>
+        <motion.img 
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          src={logo}
+          alt="FUDS Logo"
+          style={{
+            height: '160px',
+            width: 'auto',
+            objectFit: 'contain',
+            marginTop: '-50px',
+            marginBottom: '-50px',
+            cursor: 'pointer'
+          }}
+        />
         
-        {/* Nav Pill */}
-        <nav className="glass" style={{
+        {/* Nav Pill (Desktop) */}
+        <nav className="glass desktop-only" style={{
           display: 'flex',
-          background: 'rgba(255, 255, 255, 0.8)',
-          padding: '0.5rem 1rem',
+          padding: '0.5rem 0.75rem',
           borderRadius: '9999px',
-          boxShadow: '0 4px 20px rgba(0,0,0,0.02)',
-          backdropFilter: 'blur(10px)',
-          gap: '1.5rem'
+          gap: '0.5rem'
         }}>
-          {['Company', 'Vendors', 'Riders', 'Products'].map((item) => (
-            <a key={item} href={`#${item.toLowerCase()}`} style={{
-              fontSize: '0.9rem',
-              fontWeight: 600,
-              color: 'var(--text)',
-              padding: '0.5rem 1rem',
-              borderRadius: '9999px',
-              transition: 'var(--transition)'
-            }} className="nav-link">
+          {navItems.map((item) => (
+            <motion.a 
+              key={item} 
+              href={`#${item.toLowerCase()}`} 
+              className="nav-link"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              style={{
+                fontSize: '0.9rem',
+                fontWeight: 700,
+                color: 'var(--text)',
+                padding: '0.6rem 1.2rem',
+                borderRadius: '9999px',
+                transition: 'var(--transition)'
+              }}
+            >
               {item}
-            </a>
+            </motion.a>
           ))}
         </nav>
         
         {/* Actions */}
-        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-          <button className="btn btn-white desktop-only">More ⌄</button>
-          <button className="btn btn-white" style={{ position: 'relative' }}>
-            🛒
+        <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+          <button className="btn btn-white desktop-only" style={{ gap: '0.4rem' }}>
+            More <ChevronDown size={18} strokeWidth={2.5} />
+          </button>
+          
+          <motion.button 
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            className="btn btn-white" 
+            style={{ 
+              width: '56px', 
+              height: '56px', 
+              padding: 0, 
+              justifyContent: 'center',
+              borderRadius: '1.25rem'
+            }}
+          >
+            <ShoppingBag size={24} strokeWidth={2.5} />
+          </motion.button>
+
+          {/* Mobile Menu Toggle */}
+          <button 
+            className="mobile-only btn btn-white"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            style={{ 
+              width: '56px', 
+              height: '56px', 
+              padding: 0, 
+              justifyContent: 'center',
+              borderRadius: '1.25rem'
+            }}
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </div>
+
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="mobile-menu-overlay glass"
+            style={{
+              position: 'absolute',
+              top: '100%',
+              left: '1.5rem',
+              right: '1.5rem',
+              marginTop: '1rem',
+              borderRadius: '2rem',
+              padding: '2rem',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '1rem',
+              zIndex: 999,
+              boxShadow: '0 30px 60px rgba(0,0,0,0.1)'
+            }}
+          >
+            {navItems.map((item) => (
+              <a 
+                key={item} 
+                href={`#${item.toLowerCase()}`} 
+                onClick={() => setIsMobileMenuOpen(false)}
+                style={{
+                  fontSize: '1.25rem',
+                  fontWeight: 800,
+                  color: 'var(--text)',
+                  textDecoration: 'none',
+                  padding: '1rem',
+                  borderRadius: '1.25rem',
+                  background: 'rgba(0,0,0,0.02)'
+                }}
+              >
+                {item}
+              </a>
+            ))}
+            <button className="btn btn-primary" style={{ width: '100%', justifyContent: 'center', padding: '1.25rem' }}>
+              Download App
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
       
       <style>{`
-        .nav-link:hover {
-          background: var(--bg);
+        .header.is-sticky {
+          background: rgba(255, 253, 242, 0.8);
+          backdrop-filter: blur(12px);
+          box-shadow: 0 4px 30px rgba(0,0,0,0.03);
         }
+        .nav-link:hover {
+          background: rgba(0,0,0,0.04);
+        }
+        .mobile-only { display: none; }
+        
         @media (max-width: 991px) {
-          nav { display: none !important; }
           .desktop-only { display: none !important; }
+          .mobile-only { display: flex; }
         }
       `}</style>
     </header>
@@ -74,3 +183,4 @@ const Header = () => {
 };
 
 export default Header;
+
