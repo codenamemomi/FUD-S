@@ -1,9 +1,6 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
-import { Utensils, ShoppingBag, Salad, Sparkles, ChefHat, ArrowRight } from 'lucide-react';
-import burger from '../assets/burger.png';
-import groceries from '../assets/groceries.png';
-import spaghetti from '../assets/spaghetti.png';
+import { CalendarClock, ShoppingCart, Bike, Leaf, Tag } from 'lucide-react';
 
 const Features = () => {
   const targetRef = useRef(null);
@@ -15,39 +12,39 @@ const Features = () => {
 
   const strips = [
     {
-      title: "111 Meal Planner",
-      desc: "Fresh gourmet meals, scheduled today, delivered tomorrow.",
+      title: "Multi-Vendor Cart",
+      desc: "Add items from multiple restaurants and shops into a single cart. One payment. One rider. Zero hassle.",
       color: "var(--pastel-lilac)",
-      Icon: ChefHat,
-      img: burger
+      Icon: ShoppingCart,
+      tag: "Core Feature"
     },
     {
-      title: "Market Smart",
-      desc: "Fresh produce and local market picks delivered in one ride.",
+      title: "111 Meal Scheduler",
+      desc: "Plan breakfast, lunch, and dinner for today or tomorrow in one session — then sit back and wait for the knock.",
       color: "var(--pastel-saffron)",
-      Icon: ShoppingBag,
-      img: groceries
+      Icon: CalendarClock,
+      tag: "Core Feature"
     },
     {
-      title: "Chef's Palette",
-      desc: "Exotic full course meals for when you want to feel fancy.",
+      title: "Grocery Subscription",
+      desc: "Build your recurring shopping list. Pick a frequency — weekly, bi-weekly, or monthly. We handle the rest.",
       color: "var(--pastel-sky)",
-      Icon: Utensils,
-      img: spaghetti
+      Icon: Bike,
+      tag: "Core Feature"
     },
     {
-      title: "Household Pro",
-      desc: "Never run out of essentials. We've got your back.",
+      title: "Diet-Aware Picks",
+      desc: "Set your goal — Keto, Weight Loss, High Protein, Vegan, and more — and we surface the right meals for you.",
       color: "var(--pastel-mint)",
-      Icon: Salad,
-      img: null
+      Icon: Leaf,
+      tag: "Personalisation"
     },
     {
-      title: "Coming Soon",
-      desc: "Something magical is in the works just for you.",
+      title: "Price Negotiation",
+      desc: "Propose a different price on an item. Vendors can accept, reject, or counter — real market dynamics, built in.",
       color: "var(--pastel-pink)",
-      Icon: Sparkles,
-      img: null
+      Icon: Tag,
+      tag: "Coming Soon"
     }
   ];
 
@@ -80,7 +77,7 @@ const Features = () => {
               transition={{ delay: 0.2 }}
               style={{ color: 'var(--text-muted)', fontSize: 'clamp(1rem, 1.5vw, 1.4rem)', fontWeight: 600 }}
             >
-              Try the everything app for your stomach. We handle the heavy lifting.
+              Everything we're shipping in the MVP — built to test what Lagos actually wants.
             </motion.p>
           </div>
           
@@ -122,7 +119,7 @@ const FeatureCard = ({ strip }) => {
       style={{
         flex: '0 0 auto',
         width: 'clamp(320px, 35vw, 500px)',
-        height: 'clamp(450px, 45vw, 620px)',
+        height: 'clamp(420px, 42vw, 580px)',
         backgroundColor: strip.color,
         borderRadius: '3.5rem',
         padding: '3.5rem',
@@ -149,41 +146,31 @@ const FeatureCard = ({ strip }) => {
         }}>
           <strip.Icon size={36} strokeWidth={2.5} />
         </div>
-        <h3 className="font-heading" style={{ fontSize: 'clamp(2.5rem, 3.5vw, 3.8rem)', fontWeight: 900, marginBottom: '1.5rem', lineHeight: 0.9 }}>
+        <h3 className="font-heading" style={{ fontSize: 'clamp(2.2rem, 3vw, 3.2rem)', fontWeight: 900, marginBottom: '1.5rem', lineHeight: 0.95 }}>
           {strip.title}
         </h3>
-        <p style={{ fontSize: '1.2rem', fontWeight: 600, lineHeight: 1.4, opacity: 0.85, maxWidth: '280px' }}>
+        <p style={{ fontSize: '1.15rem', fontWeight: 600, lineHeight: 1.5, opacity: 0.8, maxWidth: '280px' }}>
           {strip.desc}
         </p>
       </div>
       
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 800, color: 'var(--primary)', cursor: 'pointer' }}>
-        Learn more <ArrowRight size={20} strokeWidth={3} />
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div style={{
+          display: 'inline-flex',
+          padding: '0.5rem 1.25rem',
+          background: 'rgba(255,255,255,0.5)',
+          borderRadius: '2rem',
+          fontSize: '0.8rem',
+          fontWeight: 800,
+          color: 'var(--primary)',
+          letterSpacing: '0.04em',
+          textTransform: 'uppercase'
+        }}>
+          {strip.tag}
+        </div>
       </div>
-      
-      {strip.img && (
-        <motion.div 
-          whileHover={{ scale: 1.1, rotate: 0 }}
-          className="strip-img" 
-          style={{ 
-            position: 'absolute', 
-            bottom: '-50px', 
-            right: '-50px',
-            width: 'clamp(200px, 20vw, 320px)',
-            transform: 'rotate(-12deg)',
-            transition: 'var(--transition)'
-          }}
-        >
-          <img src={strip.img} alt={strip.title} style={{ 
-            width: '100%', 
-            borderRadius: '3rem', 
-            boxShadow: '0 30px 60px rgba(0,0,0,0.18)' 
-          }} />
-        </motion.div>
-      )}
     </motion.div>
   );
 };
 
 export default Features;
-

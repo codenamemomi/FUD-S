@@ -38,14 +38,7 @@ const Header = () => {
           animate={{ opacity: 1, x: 0 }}
           src={logo}
           alt="FUDS Logo"
-          style={{
-            height: '160px',
-            width: 'auto',
-            objectFit: 'contain',
-            marginTop: '-50px',
-            marginBottom: '-50px',
-            cursor: 'pointer'
-          }}
+          className="header-logo"
         />
         
         {/* Nav Pill (Desktop) */}
@@ -163,6 +156,15 @@ const Header = () => {
       </AnimatePresence>
       
       <style>{`
+        .header-logo {
+          height: 80px;
+          width: auto;
+          object-fit: contain;
+          margin-top: -25px;
+          margin-bottom: -25px;
+          cursor: pointer;
+          transition: var(--transition);
+        }
         .header.is-sticky {
           background: rgba(255, 253, 242, 0.8);
           backdrop-filter: blur(12px);
@@ -176,6 +178,11 @@ const Header = () => {
         @media (max-width: 991px) {
           .desktop-only { display: none !important; }
           .mobile-only { display: flex; }
+          .header-logo {
+            height: 60px;
+            margin-top: -18px;
+            margin-bottom: -18px;
+          }
         }
       `}</style>
     </header>

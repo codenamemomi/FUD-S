@@ -1,6 +1,6 @@
 import React from 'react';
 import { Send, Camera, Briefcase, Mail, MapPin, Phone } from 'lucide-react';
-import footerLogo from '../assets/footer.svg';
+import footerLogo from '../assets/Icon.svg';
 
 const Footer = () => {
   return (
@@ -21,14 +21,7 @@ const Footer = () => {
             <img 
               src={footerLogo}
               alt="FUDS Logo"
-              style={{
-                height: '210px',
-                width: 'auto',
-                objectFit: 'contain',
-                marginLeft: '-40px',
-                marginBottom: '1rem',
-                cursor: 'pointer'
-              }}
+              className="footer-logo"
             />
             <p className="text-muted" style={{ fontSize: '1rem', fontWeight: 600, lineHeight: 1.6, maxWidth: '280px' }}>
               The everything app for your stomach. Personalized, scheduled, and delivered.
@@ -90,6 +83,15 @@ const Footer = () => {
       </div>
       
       <style>{`
+        .footer-logo {
+          height: 105px;
+          width: auto;
+          object-fit: contain;
+          margin-left: -20px;
+          margin-bottom: 1rem;
+          cursor: pointer;
+          transition: var(--transition);
+        }
         .footer-link {
           transition: var(--transition);
           text-decoration: none;
@@ -124,6 +126,10 @@ const Footer = () => {
           ul { justify-content: center !important; }
           .social-pill { margin: 0 auto; }
           footer div:last-child { justify-content: center; text-align: center; }
+          .footer-logo {
+            margin-left: 0;
+            height: 80px;
+          }
         }
       `}</style>
     </footer>
