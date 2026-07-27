@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { MapPin, Apple, Play } from 'lucide-react';
-import heroImg from '../assets/hero_meal.png';
+import { MapPin } from 'lucide-react';
 
 const Hero = () => {
   const containerVariants = {
@@ -159,52 +158,9 @@ const Hero = () => {
         </motion.div>
       </motion.div>
 
-      {/* Decorative Food Elements / Illustrations */}
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 1, duration: 1.5, ease: 'easeOut' }}
-        className="illustrations-container" 
-        style={{
-          position: 'absolute',
-          bottom: '-5%',
-          left: 0,
-          right: 0,
-          height: '45%',
-          zIndex: 1,
-          display: 'flex',
-          justifyContent: 'space-around',
-          alignItems: 'flex-end',
-          pointerEvents: 'none'
-        }}
-      >
-        <motion.div 
-          animate={{ y: [0, -20, 0] }}
-          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-          className="food-blob" 
-          style={{ transform: 'rotate(-10deg)', marginBottom: '80px' }}
-        >
-          <img src={heroImg} alt="Meal" style={{ 
-            width: 'clamp(200px, 20vw, 320px)', 
-            borderRadius: '4rem', 
-            boxShadow: '0 40px 80px rgba(0,0,0,0.15)',
-            border: '12px solid white'
-          }} />
-        </motion.div>
-        
-        <div className="cityscape" style={{ opacity: 0.4 }}>
-          <svg width="600" height="300" viewBox="0 0 600 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 300V250H40V220H80V250H120V200H160V180H200V200H240V250H600V300H0Z" fill="#064E3B" fillOpacity="0.05"/>
-            <rect x="50" y="150" width="80" height="150" rx="4" fill="#064E3B" fillOpacity="0.1"/>
-            <rect x="400" y="80" width="100" height="220" rx="4" fill="#064E3B" fillOpacity="0.1"/>
-          </svg>
-        </div>
-      </motion.div>
-
       <style>{`
         @media (max-width: 768px) {
           .hero-section { padding-top: 140px; }
-          .illustrations-container { display: none; }
           .input-pill-group { 
             flex-direction: column; 
             border-radius: 2.5rem; 

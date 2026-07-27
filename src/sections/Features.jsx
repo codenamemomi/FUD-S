@@ -92,11 +92,73 @@ const Features = () => {
       <style>{`
         @media (max-width: 991px) {
           .features-sticky { height: auto !important; }
-          .features-sticky > div { position: relative !important; height: auto !important; padding: 6rem 0 !important; }
-          .strips-horizontal { 
-            transform: none !important; 
-            flex-direction: column !important; 
-            gap: 2rem !important;
+          .features-sticky > div {
+            position: relative !important;
+            height: auto !important;
+            padding: 5rem 0 !important;
+            overflow: visible !important;
+          }
+          .features-sticky .container {
+            max-width: 100%;
+            overflow: hidden;
+          }
+          .features-sticky .container > div:first-child {
+            margin-bottom: 2.5rem !important;
+          }
+          .strips-horizontal {
+            transform: none !important;
+            flex-direction: column !important;
+            gap: 1.25rem !important;
+            width: 100%;
+          }
+          .strip-card {
+            width: 100% !important;
+            max-width: 100% !important;
+            min-height: 0 !important;
+            height: auto !important;
+            padding: 1.75rem !important;
+            border-radius: 2rem !important;
+            gap: 1.25rem !important;
+          }
+          .strip-card-icon {
+            width: 56px !important;
+            height: 56px !important;
+            border-radius: 1.15rem !important;
+            margin-bottom: 1.25rem !important;
+          }
+          .strip-card-icon svg {
+            width: 26px !important;
+            height: 26px !important;
+          }
+          .strip-card-title {
+            font-size: clamp(1.5rem, 6.5vw, 2rem) !important;
+            line-height: 1.15 !important;
+            margin-bottom: 0.75rem !important;
+          }
+          .strip-card-desc {
+            font-size: 0.95rem !important;
+            line-height: 1.55 !important;
+            max-width: 100% !important;
+          }
+          .strip-card-tag {
+            font-size: 0.7rem !important;
+            padding: 0.4rem 1rem !important;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .features-sticky > div {
+            padding: 4rem 0 !important;
+          }
+          .strip-card {
+            padding: 1.35rem 1.25rem !important;
+            border-radius: 1.5rem !important;
+          }
+          .strip-card-title {
+            font-size: 1.4rem !important;
+          }
+          .strip-card-desc {
+            font-size: 0.9rem !important;
           }
         }
       `}</style>
@@ -118,8 +180,9 @@ const FeatureCard = ({ strip }) => {
       className="strip-card" 
       style={{
         flex: '0 0 auto',
-        width: 'clamp(320px, 35vw, 500px)',
-        height: 'clamp(420px, 42vw, 580px)',
+        width: 'clamp(280px, 35vw, 500px)',
+        minHeight: 'clamp(380px, 42vw, 580px)',
+        height: 'auto',
         backgroundColor: strip.color,
         borderRadius: '3.5rem',
         padding: '3.5rem',
@@ -128,11 +191,15 @@ const FeatureCard = ({ strip }) => {
         border: '2px solid rgba(0,0,0,0.03)',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        gap: '1.5rem',
+        boxSizing: 'border-box',
+        minWidth: 0,
+        maxWidth: '100%'
       }}
     >
-      <div>
-        <div style={{ 
+      <div className="strip-card-body" style={{ minWidth: 0, maxWidth: '100%' }}>
+        <div className="strip-card-icon" style={{ 
           background: 'white',
           width: '80px',
           height: '80px',
@@ -142,29 +209,48 @@ const FeatureCard = ({ strip }) => {
           borderRadius: '1.75rem',
           boxShadow: '0 15px 30px rgba(0,0,0,0.05)',
           marginBottom: '2.5rem',
-          color: 'var(--primary)'
+          color: 'var(--primary)',
+          flexShrink: 0
         }}>
           <strip.Icon size={36} strokeWidth={2.5} />
         </div>
-        <h3 className="font-heading" style={{ fontSize: 'clamp(2.2rem, 3vw, 3.2rem)', fontWeight: 900, marginBottom: '1.5rem', lineHeight: 0.95 }}>
+        <h3 className="font-heading strip-card-title" style={{
+          fontSize: 'clamp(1.75rem, 3vw, 3.2rem)',
+          fontWeight: 900,
+          marginBottom: '1.25rem',
+          lineHeight: 1.1,
+          overflowWrap: 'break-word',
+          wordBreak: 'break-word',
+          hyphens: 'auto'
+        }}>
           {strip.title}
         </h3>
-        <p style={{ fontSize: '1.15rem', fontWeight: 600, lineHeight: 1.5, opacity: 0.8, maxWidth: '280px' }}>
+        <p className="strip-card-desc" style={{
+          fontSize: 'clamp(0.95rem, 1.5vw, 1.15rem)',
+          fontWeight: 600,
+          lineHeight: 1.55,
+          opacity: 0.8,
+          maxWidth: '100%',
+          overflowWrap: 'break-word',
+          wordBreak: 'break-word'
+        }}>
           {strip.desc}
         </p>
       </div>
       
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <div style={{
+      <div className="strip-card-footer" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0, minWidth: 0 }}>
+        <div className="strip-card-tag" style={{
           display: 'inline-flex',
           padding: '0.5rem 1.25rem',
           background: 'rgba(255,255,255,0.5)',
           borderRadius: '2rem',
-          fontSize: '0.8rem',
+          fontSize: '0.75rem',
           fontWeight: 800,
           color: 'var(--primary)',
           letterSpacing: '0.04em',
-          textTransform: 'uppercase'
+          textTransform: 'uppercase',
+          maxWidth: '100%',
+          whiteSpace: 'nowrap'
         }}>
           {strip.tag}
         </div>
