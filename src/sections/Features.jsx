@@ -20,7 +20,7 @@ const Features = () => {
     },
     {
       title: "111 Meal Scheduler",
-      desc: "Plan breakfast, lunch, and dinner for today or tomorrow in one session — then sit back and wait for the knock.",
+      desc: "Plan any day Monday to Sunday. Breakfast 8–11am, lunch 1–4pm, dinner 5–7pm — pick a slot and order one, two, or all three.",
       color: "var(--pastel-saffron)",
       Icon: CalendarClock,
       tag: "Core Feature"
