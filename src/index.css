@@ -30,13 +30,19 @@
   box-sizing: border-box;
 }
 
-body {
+html, body, #root, .app {
   font-family: 'Inter', sans-serif;
   background-color: var(--bg);
   color: var(--text);
   line-height: 1.5;
   overflow-x: hidden;
+  max-width: 100vw;
+  width: 100%;
   -webkit-font-smoothing: antialiased;
+}
+
+img, svg, video {
+  max-width: 100%;
 }
 
 h1, h2, h3, h4, .font-heading {
@@ -48,11 +54,19 @@ h1, h2, h3, h4, .font-heading {
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 2rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 @media (max-width: 768px) {
   .container {
-    padding: 0 1.5rem;
+    padding: 0 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 1rem;
   }
 }
 
@@ -77,6 +91,17 @@ h1, h2, h3, h4, .font-heading {
   cursor: pointer;
   transition: var(--transition-bounce);
   white-space: nowrap;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 640px) {
+  .btn {
+    white-space: normal;
+    text-align: center;
+    padding: 0.8rem 1.25rem;
+    font-size: 0.95rem;
+  }
 }
 
 .btn-primary {

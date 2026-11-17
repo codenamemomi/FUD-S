@@ -2,7 +2,7 @@ import React from 'react';
 import { Send, Camera, Briefcase, Mail, MapPin, Phone } from 'lucide-react';
 import footerLogo from '../assets/Icon.svg';
 
-const Footer = () => {
+const Footer = ({ onNavigate }) => {
   return (
     <footer className="section-padding" style={{
       background: 'var(--bg)',
@@ -22,6 +22,11 @@ const Footer = () => {
               src={footerLogo}
               alt="FUDS Logo"
               className="footer-logo"
+              onClick={() => {
+                if (onNavigate) onNavigate('home');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              style={{ cursor: 'pointer' }}
             />
             <p className="text-muted" style={{ fontSize: '1rem', fontWeight: 600, lineHeight: 1.6, maxWidth: '280px' }}>
               The everything app for your stomach. Personalized, scheduled, and delivered.
@@ -31,20 +36,80 @@ const Footer = () => {
           <div>
             <h4 className="font-heading" style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '2rem' }}>Products</h4>
             <ul style={{ listStyle: 'none', display: 'grid', gap: '1rem', fontSize: '0.95rem', fontWeight: 700, color: 'var(--text-muted)' }}>
-              <li><a href="#products" className="footer-link">FUDS for Customers</a></li>
-              <li><a href="#vendors" className="footer-link">FUDS for Vendors</a></li>
+              <li>
+                <a
+                  href="#home"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (onNavigate) onNavigate('home');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="footer-link"
+                >
+                  FUDS for Customers
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#vendors"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (onNavigate) onNavigate('vendors');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="footer-link"
+                >
+                  FUDS for Vendors
+                </a>
+              </li>
               <li><a href="#riders" className="footer-link">FUDS for Riders</a></li>
               <li><a href="#business" className="footer-link">FUDS Business</a></li>
             </ul>
           </div>
           
           <div>
-            <h4 className="font-heading" style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '2rem' }}>Company</h4>
+            <h4 className="font-heading" style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '2rem' }}>Company & Stories</h4>
             <ul style={{ listStyle: 'none', display: 'grid', gap: '1rem', fontSize: '0.95rem', fontWeight: 700, color: 'var(--text-muted)' }}>
-              <li><a href="#about" className="footer-link">About Us</a></li>
-              <li><a href="#careers" className="footer-link">Careers</a></li>
-              <li><a href="#support" className="footer-link">Contact Support</a></li>
-              <li><a href="#quality" className="footer-link">Quality Standards</a></li>
+              <li>
+                <a 
+                  href="#contact" 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (onNavigate) onNavigate('contact');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="footer-link"
+                >
+                  Contact Us
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="#faqs" 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (onNavigate) onNavigate('faq');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="footer-link"
+                >
+                  Frequently Asked Questions
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="#blog" 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (onNavigate) onNavigate('blog');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="footer-link"
+                >
+                  The FUDS Blog
+                </a>
+              </li>
+              <li><a href="#about" className="footer-link">About Us & Careers</a></li>
             </ul>
           </div>
           
